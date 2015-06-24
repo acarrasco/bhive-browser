@@ -8,6 +8,12 @@
         <script src="/bower/angular/angular.js"></script>
         <script src="/bower/angular-route/angular-route.js"></script>
         <script src="/static/js/app.js"></script>
+        <link href="//s3.amazonaws.com/bv-bootstrap/v2.1.4/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+        <style>
+            label {
+                display: inline
+            }
+        </style>
     </head>
     <body>
         <div ng-controller="ProjectController">
@@ -34,14 +40,12 @@
                         <label>compare (b)<input type="radio" name="diff_b" ng-model="$parent.diff_b" value="{{revision.version}}"></label>
                     </li>
                 </ul>
-                <pre>
-                    {{selectedRevisionContents}}
-                </pre>
+                <pre>{{selectedRevisionContents}}</pre>
             </div>
             <div ng-hide="!(diff_a && diff_b)">
                 <button ng-click="compare()">compare!</button>
                 <pre>
-                    {{revisionsDifference}}
+{{revisionsDifference}}
                 </pre>
             </div>
         </div>
