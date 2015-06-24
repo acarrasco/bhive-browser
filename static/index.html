@@ -18,10 +18,10 @@
     <body>
         <div ng-controller="ProjectController">
             <div>
-                <label>project:<input type="text" ng-model="projectName"/></label>
-                <label>pathLike:<input type="text" ng-model="pathLike"/></label>
-                <label>skip:<input type="text" ng-model="skip" value="0"/></label>
-                <label>maxResults:<input type="text" ng-model="maxResults" value="100"/></label>
+                <label>project:<input type="text" ng-model="projectName" ng-change="browseProject(skip)"/></label>
+                <label>pathLike:<input type="text" ng-model="pathLike" ng-change="browseProject(skip)"/></label>
+                <label>skip:<input type="text" ng-model="skip" value="0" ng-change="browseProject(skip)"/></label>
+                <label>maxResults:<input type="text" ng-model="maxResults" value="100" ng-change="browseProject(skip)"/></label>
                 <button ng-click="browseProject(skip)">browse!</button>
                 <ul>
                     <li ng-repeat="file in project.values">
@@ -44,9 +44,7 @@
             </div>
             <div ng-hide="!(diff_a && diff_b)">
                 <button ng-click="compare()">compare!</button>
-                <pre>
-{{revisionsDifference}}
-                </pre>
+                <pre>{{revisionsDifference}}</pre>
             </div>
         </div>
     </body>

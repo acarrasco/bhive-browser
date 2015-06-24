@@ -1,7 +1,12 @@
 var app = angular.module('app', ['ngRoute']);
 
 app.controller('ProjectController', function($scope, $http, $q) {
+    $scope.skip = 0;
+    $scope.maxResults = 100;
+
     $scope.browseProject = function(offset) {
+        offset = Math.max(0, Number(offset));
+
         if (offset !== $scope.skip) {
             $scope.skip = offset;
         }
@@ -18,7 +23,7 @@ app.controller('ProjectController', function($scope, $http, $q) {
             }
         }).success(function(data, status, headers, config) {
             $scope.project = data;
-            $scope.maxResults = data.query.maxResults;
+            $scope.maxResults = data.query && data.query.maxResults || $scope.maxResults;
             $scope.file = null;
             $scope.path = null;
             $scope.selectedRevisionContents = null;
