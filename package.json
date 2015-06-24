@@ -1,0 +1,14 @@
+{
+  "name": "bhive-browser",
+  "version": "0.0.1",
+  "private": true,
+  "engines": {
+    "node": ">= 0.10.32"
+  },
+  "dependencies": {
+    "express": "^4.13.0",
+    "morgan": "^1.6.0",
+    "request": "^2.58.0"
+  },
+  "devDependencies": {}
+}

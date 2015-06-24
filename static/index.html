@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <title>b:hive browser</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="/bower/json-diff/json-diff.js"></script>
+        <script src="/bower/angular/angular.js"></script>
+        <script src="/bower/angular-route/angular-route.js"></script>
+        <script src="/static/js/app.js"></script>
+    </head>
+    <body>
+        <div ng-controller="ProjectController">
+            <div>
+                <label>project:<input type="text" ng-model="projectName"/></label>
+                <label>pathLike:<input type="text" ng-model="pathLike"/></label>
+                <label>skip:<input type="text" ng-model="skip" value="0"/></label>
+                <label>maxResults:<input type="text" ng-model="maxResults" value="100"/></label>
+                <button ng-click="browseProject(skip)">browse!</button>
+                <ul>
+                    <li ng-repeat="file in project.values">
+                        <a href="#path={{file.path}}" ng-click="browseFile(file.path)">/{{file.path}}</a>
+                    </li>
+                </ul>
+                <button ng-click="browseProject(skip-(maxResults || 100))" ng-disabled="!skip">Previous page</button>
+                <button ng-click="browseProject(skip+(maxResults || 100))">Next page</button>
+            </div>
+            <div ng-hide="!path">
+                <h5>{{path}}</h5>
+                <ul>
+                    <li ng-repeat="revision in file.values">
+                        <a href="#path={{path}}&revision={{revision.version}}" ng-click="showRevision(revision)">{{revision.version}}</a>
+                        <label>compare (a)<input type="radio" name="diff_a" ng-model="$parent.diff_a" value="{{revision.version}}"></label>
+                        <label>compare (b)<input type="radio" name="diff_b" ng-model="$parent.diff_b" value="{{revision.version}}"></label>
+                    </li>
+                </ul>
+                <pre>
+                    {{selectedRevisionContents}}
+                </pre>
+            </div>
+            <div ng-hide="!(diff_a && diff_b)">
+                <button ng-click="compare()">compare!</button>
+                <pre>
+                    {{revisionsDifference}}
+                </pre>
+            </div>
+        </div>
+    </body>
+
+</html>

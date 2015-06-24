@@ -1,0 +1,13 @@
+env: local
+port: 8081
+
+threads:
+    default: ~
+    local: 1
+
+log_level:
+    default: all
+    jenkins: off
+    prod: info
+
+bhive_endpoint: bhive.bazaarvoice.com
