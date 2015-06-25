@@ -77,6 +77,10 @@ app.controller('ProjectController', function($scope, $http, $q) {
     };
 
     $scope.compare = function() {
+        if (!($scope.diff_a && $scope.diff_b)) {
+            return;
+        }
+        $scope.selectedRevisionContents = null;
         var contents_a = $http({
             method: 'GET',
             url: '/bhive/',
@@ -102,5 +106,28 @@ app.controller('ProjectController', function($scope, $http, $q) {
         }, function() {
             console.log('something f****d up', arguments);
         });
+    };
+
+    $scope.revisionIndex = function(revision) {
+        if(!$scope.file) {
+            return;
+        }
+        var revisions = $scope.file.values;
+        for (var i = 0; i < revisions.length; i++) {
+            if (revisions[i].version === revision) {
+                return i;
+            }
+        }
+        return -1;
+    };
+
+    $scope.updateDiff = function(delta) {
+        var revisions = $scope.file.values;
+        var diff_a_idx = $scope.revisionIndex($scope.diff_a);
+        $scope.diff_a = revisions[diff_a_idx+delta].version;
+
+        var diff_b_idx = $scope.revisionIndex($scope.diff_b);
+        $scope.diff_b = revisions[diff_b_idx+delta].version;
+        $scope.compare();
     };
 });

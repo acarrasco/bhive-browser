@@ -25,7 +25,6 @@
                 <label>pathLike:<input type="text" ng-model="pathLike" ng-change="browseProject(skip)"/></label>
                 <label>skip:<input type="text" ng-model="skip" value="0" ng-change="browseProject(skip)"/></label>
                 <label>maxResults:<input type="text" ng-model="maxResults" value="100" ng-change="browseProject(skip)"/></label>
-                <button ng-click="browseProject(skip)">browse!</button>
                 <ul>
                     <li ng-repeat="file in project.values">
                         <a href="#path={{file.path}}" ng-click="browseFile(file.path)">/{{file.path}}</a>
@@ -39,15 +38,16 @@
                 <ul>
                     <li ng-repeat="revision in file.values">
                         <a href="#path={{path}}&revision={{revision.version}}" ng-click="showRevision(revision)">{{revision.version}}</a>
-                        <label>compare (a)<input type="radio" name="diff_a" ng-model="$parent.diff_a" value="{{revision.version}}"></label>
-                        <label>compare (b)<input type="radio" name="diff_b" ng-model="$parent.diff_b" value="{{revision.version}}"></label>
+                        <label>compare (a)<input type="radio" name="diff_a" ng-click="compare()" ng-model="$parent.diff_a" value="{{revision.version}}"></label>
+                        <label>compare (b)<input type="radio" name="diff_b" ng-click="compare()" ng-model="$parent.diff_b" value="{{revision.version}}"></label>
                     </li>
                 </ul>
-                <pre>{{selectedRevisionContents}}</pre>
+                <pre ng-hide="!selectedRevisionContents">{{selectedRevisionContents}}</pre>
             </div>
             <div ng-hide="!(diff_a && diff_b)">
-                <button ng-click="compare()">compare!</button>
                 <pre>{{revisionsDifference}}</pre>
+                <button ng-click="updateDiff(1)" ng-disabled="revisionIndex(diff_a) === file.values.length-1 || revisionIndex(diff_b) === file.values.length-1">Previous diff</button>
+                <button ng-click="updateDiff(-1)" ng-disabled="revisionIndex(diff_b) === 0 || revisionIndex(diff_a) === 0">Next diff</button>
             </div>
         </div>
     </body>
