@@ -54,6 +54,11 @@ module.exports = function (grunt) {
                     'server.js'
                 ]
             }
+        },
+        open: {
+            server: {
+                path: 'http://localhost:8081/static/'
+            }
         }
     });
 
@@ -62,7 +67,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-run');
+    grunt.loadNpmTasks('grunt-open');
 
-    grunt.registerTask('server', ['run:server', 'wait:server']);
+    grunt.registerTask('server', ['open:server', 'run:server', 'wait:server']);
     grunt.registerTask('test', ['jshint', 'mochaTest:main']);
 };
